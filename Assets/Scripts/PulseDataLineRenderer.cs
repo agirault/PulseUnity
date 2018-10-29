@@ -2,8 +2,8 @@
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(RectTransform))]
-public class PulseVitalRenderer : MonoBehaviour {
-
+public class PulseDataLineRenderer: PulseDataConsumer
+{
     [Range(.1f, 10f)]
     public float thickness = 1f;
     public Color color = Color.red;
@@ -11,28 +11,30 @@ public class PulseVitalRenderer : MonoBehaviour {
     public bool traceInitialLine = true;
     public float yMin = 0f;
     public float yMax = 100f;
-    public float xRange = 5f;
+    public float xRange = 10f;
 
-    private float previousTime = 0f;
-    private LineRenderer lineRenderer;
-    private RectTransform T;
+    float previousTime = 0f;
+    LineRenderer lineRenderer;
+    RectTransform T;
 
-    private void Awake() {
+    // Monobehavior methods
+
+    void Awake() {
         Init();
         if (!Application.isPlaying) {
             UpdateInitialLine();
         }
     }
 
-    private void OnEnable() {
+    void OnEnable() {
         lineRenderer.enabled = true;
     }
 
-    private void OnDisable() {
+    void OnDisable() {
         lineRenderer.enabled = false;
     }
 
-    private void OnValidate() {
+    void OnValidate() {
         if (yMax < yMin) {
             yMax = yMin + .1f;
         }
@@ -49,11 +51,36 @@ public class PulseVitalRenderer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        // in case we change the size of the rect transform
         if (!Application.isPlaying) {
+            // in case we change the size of the rect transform
             UpdateInitialLine();
+            return;
+        }
+
+        // Ensure there is data to add
+        if (source == null ||
+            source.data == null ||
+            source.data.timeStampList == null ||
+            timePointIndex >= source.data.timeStampList.Count ||
+            dataFieldIndex >= source.data.valuesTable.Count) {
+            return;
+        }
+
+        float currentTime = Time.time;
+        float dataTime = source.data.timeStampList.Get(timePointIndex);
+        var values = source.data.valuesTable[dataFieldIndex];
+        var timeStamps = source.data.timeStampList;
+        while (currentTime >= dataTime) {
+            float dataValue = values.Get(timePointIndex);
+            AddPoint(dataTime, dataValue);
+            if (timePointIndex + 1 >= timeStamps.Count) {
+                break;
+            }
+            dataTime = timeStamps.Get(++timePointIndex);
         }
     }
+
+    // Custom methods
 
     void Init() {
         T = (RectTransform)this.transform;
