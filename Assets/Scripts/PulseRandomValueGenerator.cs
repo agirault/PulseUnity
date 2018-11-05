@@ -39,6 +39,9 @@ public class PulseRandomValueGenerator: PulseDataSource
         }
         previousTime = time;
         previousValue = ComputeRandomValue();
+
+        data.timeStampList.Clear();
+        data.valuesTable[0].Clear();
         data.timeStampList.Add(previousTime);
         data.valuesTable[0].Add(previousValue);
     }

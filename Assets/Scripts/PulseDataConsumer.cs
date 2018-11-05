@@ -7,7 +7,33 @@ public abstract class PulseDataConsumer : MonoBehaviour
     public PulseDataSource source;
     [SerializeField, HideInInspector]
     public int dataFieldIndex;
-    internal int timePointIndex;
+
+    void Update() {
+        if (!Application.isPlaying) {
+            return;
+        }
+
+        // Ensure there is data to add
+        if (source == null ||
+            source.data == null ||
+            source.data.timeStampList == null ||
+            source.data.timeStampList.IsEmpty() ||
+            dataFieldIndex >= source.data.valuesTable.Count) {
+            return;
+        }
+
+        // Only grab the last value
+        float currentTime = Time.time;
+        int dataIndex = source.data.timeStampList.Count - 1;
+        float dataTime = source.data.timeStampList.Get(dataIndex);
+        var values = source.data.valuesTable[dataFieldIndex];
+        if (currentTime >= dataTime) {
+            float dataValue = values.Get(dataIndex);
+            UpdateFromPulse(dataTime, dataValue);
+        }
+    }
+
+    abstract internal void UpdateFromPulse(float dataTime, float dataValue);
 }
 
 [CustomEditor(typeof(PulseDataConsumer), true)]

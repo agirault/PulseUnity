@@ -7,6 +7,9 @@ public class PulseCSVReader: PulseDataSource
 {
     public TextAsset CSVInput;
 
+    List<string[]> CSVValues;
+    int lineId;
+
     void Awake() {
         if (data != null) return;
         data = new PulseData();
@@ -28,6 +31,7 @@ public class PulseCSVReader: PulseDataSource
             return;
         }
         data.timeStampList = new FloatList(lines.Length - 1);
+        CSVValues = new List<string[]>(lines.Length - 1);
 
         int numberOfColumns = 0;
         for (int lineId = 1; lineId < lines.Length; ++lineId) {
@@ -39,19 +43,45 @@ public class PulseCSVReader: PulseDataSource
             } else if (values.Length != numberOfColumns) {
                 continue;
             }
+            CSVValues.Add(values);
+        }
+    }
 
-            string timeStr = values[0];
-            float time = float.Parse(timeStr);
-            data.timeStampList.Add(time);
+    void LateUpdate() {
+        if (!Application.isPlaying || CSVValues == null) {
+            return;
+        }
 
-            for (int columnId = 1; columnId <= data.fields.Length; ++columnId) {
-                if (lineId == 1) {
-                    data.valuesTable.Add(new FloatList(lines.Length - 1));
+        if (lineId >= CSVValues.Count) {
+            return;
+        }
+
+        var currentTime = Time.time;
+
+        var lineValues = CSVValues[lineId];
+        string dataTimeStr = lineValues[0];
+        float dataTime = float.Parse(dataTimeStr);
+        while (dataTime <= currentTime) {
+
+            data.timeStampList.Clear();
+            data.timeStampList.Add(dataTime);
+
+            for (int columnId = 1; columnId < lineValues.Length; ++columnId) {
+                if (lineId == 0) {
+                    data.valuesTable.Add(new FloatList(CSVValues.Count));
+                } else {
+                    data.valuesTable[columnId - 1].Clear();
                 }
-                string valueStr = values[columnId];
+                string valueStr = lineValues[columnId];
                 float value = float.Parse(valueStr);
                 data.valuesTable[columnId - 1].Add(value);
             }
+            if (++lineId >= CSVValues.Count) {
+                return;
+            }
+            lineValues = CSVValues[lineId];
+            dataTimeStr = lineValues[0];
+            dataTime = float.Parse(dataTimeStr);
         }
     }
 

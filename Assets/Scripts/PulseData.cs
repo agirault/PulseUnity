@@ -12,6 +12,9 @@ public class FloatList
     public FloatList(int capacity) {
         list = new List<float>(capacity);
     }
+    public void Clear() {
+        list.Clear();
+    }
     public void Add(float value) {
         list.Add(value);
     }
@@ -25,6 +28,9 @@ public class FloatList
         get {
             return list.Count;
         }
+    }
+    public bool IsEmpty() {
+        return Count == 0;
     }
 }
 

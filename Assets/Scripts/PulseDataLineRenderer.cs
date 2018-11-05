@@ -49,35 +49,8 @@ public class PulseDataLineRenderer: PulseDataConsumer
         }
     }
 
-    // Update is called once per frame
-    void Update() {
-        if (!Application.isPlaying) {
-            // in case we change the size of the rect transform
-            UpdateInitialLine();
-            return;
-        }
-
-        // Ensure there is data to add
-        if (source == null ||
-            source.data == null ||
-            source.data.timeStampList == null ||
-            timePointIndex >= source.data.timeStampList.Count ||
-            dataFieldIndex >= source.data.valuesTable.Count) {
-            return;
-        }
-
-        float currentTime = Time.time;
-        float dataTime = source.data.timeStampList.Get(timePointIndex);
-        var values = source.data.valuesTable[dataFieldIndex];
-        var timeStamps = source.data.timeStampList;
-        while (currentTime >= dataTime) {
-            float dataValue = values.Get(timePointIndex);
-            AddPoint(dataTime, dataValue);
-            if (timePointIndex + 1 >= timeStamps.Count) {
-                break;
-            }
-            dataTime = timeStamps.Get(++timePointIndex);
-        }
+    override internal void UpdateFromPulse(float dataTime, float dataValue) {
+        AddPoint(dataTime, dataValue);
     }
 
     // Custom methods
