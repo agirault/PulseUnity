@@ -7,6 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(UnityEngine.UI.Text))]
 public class PulseDataNumberRenderer: PulseDataConsumer
 {
+    public string prefix = "";
+    public string suffix = "";
+    public float multiplier = 1;
     public uint decimals = 0;
     [Range(0f, 120f)]
     public float frequency = 0;
@@ -28,7 +31,9 @@ public class PulseDataNumberRenderer: PulseDataConsumer
 
         int lastIndex = values.Count - 1;
         float dataValue = values.Get(lastIndex);
+        dataValue *= multiplier;
         string decimalCode = "F" + decimals.ToString();
-        textRenderer.text = dataValue.ToString(decimalCode);
+        string dataString = dataValue.ToString(decimalCode);
+        textRenderer.text = prefix + dataString + suffix;
     }
 }
