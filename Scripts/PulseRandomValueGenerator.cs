@@ -33,7 +33,7 @@ public class PulseRandomValueGenerator: PulseDataSource
         previousValue = Random.Range(minValue, maxValue);
     }
 
-    void Update() {
+    void LateUpdate() {
         if (!Application.isPlaying) return;
 
         var time = Time.time;
@@ -45,6 +45,7 @@ public class PulseRandomValueGenerator: PulseDataSource
 
         data.timeStampList.Clear();
         data.valuesTable[0].Clear();
+
         data.timeStampList.Add(previousTime);
         data.valuesTable[0].Add(previousValue);
     }

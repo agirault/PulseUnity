@@ -18,7 +18,7 @@ public class PulseDataNumberRenderer: PulseDataConsumer
         textRenderer = gameObject.GetComponent<UnityEngine.UI.Text>();
     }
 
-    override internal void UpdateFromPulse(float dataTime, float dataValue) {
+    override internal void UpdateFromPulse(FloatList times, FloatList values) {
         // Update display at a certain frequency
         float currentTime = Time.time;
         if (frequency > 0 && currentTime < previousTime + 1 / frequency) {
@@ -26,6 +26,8 @@ public class PulseDataNumberRenderer: PulseDataConsumer
         }
         previousTime = currentTime;
 
+        int lastIndex = values.Count - 1;
+        float dataValue = values.Get(lastIndex);
         string decimalCode = "F" + decimals.ToString();
         textRenderer.text = dataValue.ToString(decimalCode);
     }

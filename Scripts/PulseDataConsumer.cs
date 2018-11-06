@@ -1,6 +1,7 @@
 ﻿/* Distributed under the Apache License, Version 2.0.
    See accompanying NOTICE file for details.*/
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
@@ -25,18 +26,11 @@ public abstract class PulseDataConsumer : MonoBehaviour
             return;
         }
 
-        // Only grab the last value
-        float currentTime = Time.time;
-        int dataIndex = source.data.timeStampList.Count - 1;
-        float dataTime = source.data.timeStampList.Get(dataIndex);
-        var values = source.data.valuesTable[dataFieldIndex];
-        if (currentTime >= dataTime) {
-            float dataValue = values.Get(dataIndex);
-            UpdateFromPulse(dataTime, dataValue);
-        }
+        var dataFieldValues = source.data.valuesTable[dataFieldIndex];
+        UpdateFromPulse(source.data.timeStampList, dataFieldValues);
     }
 
-    abstract internal void UpdateFromPulse(float dataTime, float dataValue);
+    abstract internal void UpdateFromPulse(FloatList times, FloatList values);
 }
 
 [CustomEditor(typeof(PulseDataConsumer), true)]

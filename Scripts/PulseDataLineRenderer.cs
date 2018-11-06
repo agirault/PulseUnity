@@ -52,8 +52,10 @@ public class PulseDataLineRenderer: PulseDataConsumer
         }
     }
 
-    override internal void UpdateFromPulse(float dataTime, float dataValue) {
-        AddPoint(dataTime, dataValue);
+    override internal void UpdateFromPulse(FloatList times, FloatList values) {
+        for (int i = 0; i < times.Count; ++i) {
+            AddPoint(times.Get(i), values.Get(i));
+        }
     }
 
     // Custom methods

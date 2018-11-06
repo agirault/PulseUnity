@@ -43,6 +43,10 @@ public class PulseCSVReader: PulseDataSource
 
             if (lineId == 1) {
                 numberOfColumns = values.Length;
+                data.valuesTable = new List<FloatList>(numberOfColumns - 1);
+                for (int columnId = 1; columnId < values.Length; ++columnId) {
+                    data.valuesTable.Add(new FloatList(lines.Length - 1));
+                }
             } else if (values.Length != numberOfColumns) {
                 continue;
             }
@@ -55,26 +59,23 @@ public class PulseCSVReader: PulseDataSource
             return;
         }
 
+        data.timeStampList.Clear();
+        foreach (FloatList column in data.valuesTable) {
+            column.Clear();
+        }
+
         if (lineId >= CSVValues.Count) {
             return;
         }
 
         var currentTime = Time.time;
-
         var lineValues = CSVValues[lineId];
         string dataTimeStr = lineValues[0];
         float dataTime = float.Parse(dataTimeStr);
+
         while (dataTime <= currentTime) {
-
-            data.timeStampList.Clear();
             data.timeStampList.Add(dataTime);
-
             for (int columnId = 1; columnId < lineValues.Length; ++columnId) {
-                if (lineId == 0) {
-                    data.valuesTable.Add(new FloatList(CSVValues.Count));
-                } else {
-                    data.valuesTable[columnId - 1].Clear();
-                }
                 string valueStr = lineValues[columnId];
                 float value = float.Parse(valueStr);
                 data.valuesTable[columnId - 1].Add(value);
