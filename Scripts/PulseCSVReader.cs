@@ -9,9 +9,11 @@ using UnityEngine;
 public class PulseCSVReader: PulseDataSource
 {
     public TextAsset CSVInput;
+    public float timeElapsedAtStart = 0;
 
     List<string[]> CSVValues;
     int lineId;
+    float startTime;
 
     void Awake() {
         if (data != null) return;
@@ -28,6 +30,8 @@ public class PulseCSVReader: PulseDataSource
         if (!Application.isPlaying || CSVInput == null) {
             return;
         }
+
+        startTime = Time.time;
 
         string[] lines = CSVInput.text.Split('\n');
         if (lines == null || lines.Length < 2) {
@@ -73,7 +77,7 @@ public class PulseCSVReader: PulseDataSource
         string dataTimeStr = lineValues[0];
         float dataTime = float.Parse(dataTimeStr);
 
-        while (dataTime <= currentTime) {
+        while (dataTime - timeElapsedAtStart <= currentTime - startTime) {
             data.timeStampList.Add(dataTime);
             for (int columnId = 1; columnId < lineValues.Length; ++columnId) {
                 string valueStr = lineValues[columnId];
