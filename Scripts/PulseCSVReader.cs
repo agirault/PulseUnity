@@ -58,7 +58,7 @@ public class PulseCSVReader: PulseDataSource
         }
     }
 
-    void LateUpdate() {
+    void Update() {
         if (!Application.isPlaying || CSVValues == null) {
             return;
         }

@@ -21,10 +21,9 @@ public class PulseRandomValueGenerator: PulseDataSource
     void Awake() {
         if (data != null) return;
         data = new PulseData();
-        data.fields = new string[1];
-        data.fields[0] = "Random";
+        data.fields = new string[1] { "Random" };
         data.timeStampList = new FloatList();
-        data.valuesTable = new List<FloatList>(1);
+        data.valuesTable = new List<FloatList>(data.fields.Length);
         data.valuesTable.Add(new FloatList());
     }
 
@@ -33,7 +32,7 @@ public class PulseRandomValueGenerator: PulseDataSource
         previousValue = Random.Range(minValue, maxValue);
     }
 
-    void LateUpdate() {
+    void Update() {
         if (!Application.isPlaying) return;
 
         var time = Time.time;

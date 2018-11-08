@@ -12,7 +12,7 @@ public abstract class PulseDataConsumer : MonoBehaviour
     [SerializeField, HideInInspector]
     public int dataFieldIndex;
 
-    void Update() {
+    void LateUpdate() {
         if (!Application.isPlaying) {
             return;
         }
