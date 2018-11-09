@@ -79,7 +79,14 @@ public class PulseEngineDriver: PulseDataSource
         string logFilePath = Application.persistentDataPath + "/" +
                                         gameObject.name +
                                         dateAndTimeVar + ".log";
-        engine = new PulseEngine(logFilePath);
+
+        // Set the data_directory for Pulse to find all the data files it expects
+        // This code will derive the data directory based on how this project was
+        // included in the editor. Still investigating how to set data_dir in a package
+        UnityEditor.MonoScript ms = UnityEditor.MonoScript.FromMonoBehaviour( this );
+        string path = UnityEditor.AssetDatabase.GetAssetPath(ms);
+        path = System.IO.Path.GetDirectoryName(path)+"/../Data";
+        engine = new PulseEngine(logFilePath, path);
 
         // Initialize engine state from tje state file content
         engine.SerializeFromString(initialStateFile.text,

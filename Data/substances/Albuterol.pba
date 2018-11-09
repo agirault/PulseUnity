@@ -1,0 +1,254 @@
+Name: "Albuterol"
+Density {
+  ScalarMassPerVolume {
+    Value: 3213.0
+    Unit: "g/m^3"
+  }
+}
+MolarMass {
+  ScalarMassPerAmount {
+    Value: 239.31
+    Unit: "g/mol"
+  }
+}
+State: Liquid
+Aerosolization {
+  BronchioleModifier {
+    ScalarNegative1To1 {
+      Value: 1.0
+    }
+  }
+  InflammationCoefficient {
+    Scalar0To1 {
+    }
+  }
+  ParticulateSizeDistribution {
+    HistogramFractionVsLength {
+      Histogram {
+        Dependent {
+          Value: 0.15003
+          Value: 0.18454
+          Value: 0.16846
+          Value: 0.14005
+          Value: 0.11013
+          Value: 0.08322
+          Value: 0.06096
+          Value: 0.04351
+          Value: 0.03038
+          Value: 0.02079
+          Value: 0.00713
+          Value: 7.4E-4
+          Value: 6.0E-5
+          Value: 0.0
+        }
+        Independent {
+          Value: 0.0
+          Value: 1.0
+          Value: 2.0
+          Value: 3.0
+          Value: 4.0
+          Value: 5.0
+          Value: 6.0
+          Value: 7.0
+          Value: 8.0
+          Value: 9.0
+          Value: 10.0
+          Value: 15.0
+          Value: 20.0
+          Value: 25.0
+          Value: 30.0
+        }
+        IndependentUnit: "um"
+      }
+    }
+  }
+}
+RelativeDiffusionCoefficient {
+  Value: 0.047
+}
+SolubilityCoefficient {
+  ScalarInversePressure {
+    Value: 0.46
+    Unit: "1/atm"
+  }
+}
+Clearance {
+  SystemicClearance {
+    FractionExcretedInFeces {
+      Scalar0To1 {
+        Value: 0.2
+      }
+    }
+    FractionUnboundInPlasma {
+      Scalar0To1 {
+        Value: 0.9
+      }
+    }
+    IntrinsicClearance {
+      ScalarVolumePerTimeMass {
+        Unit: "mL/min kg"
+      }
+    }
+    RenalClearance {
+      ScalarVolumePerTimeMass {
+        Value: 0.2
+        Unit: "mL/min kg"
+      }
+    }
+    SystemicClearance {
+      ScalarVolumePerTimeMass {
+        Value: 1.0
+        Unit: "mL/min kg"
+      }
+    }
+  }
+  RenalClearance {
+    Clearance {
+      ScalarVolumePerTimeMass {
+        Value: 0.2
+        Unit: "mL/min kg"
+      }
+    }
+  }
+}
+Pharmacokinetics {
+  TissueKinetics {
+    Name: "GutTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "LeftKidneyTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "MuscleTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "SkinTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "LiverTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "MyocardiumTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "RightLungTissue"
+    PartitionCoefficient {
+      Value: 4.0
+    }
+  }
+  TissueKinetics {
+    Name: "BrainTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "BoneTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "LeftLungTissue"
+    PartitionCoefficient {
+      Value: 4.0
+    }
+  }
+  TissueKinetics {
+    Name: "FatTissue"
+    PartitionCoefficient {
+      Value: 2.0
+    }
+  }
+  TissueKinetics {
+    Name: "RightKidneyTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+  TissueKinetics {
+    Name: "SpleenTissue"
+    PartitionCoefficient {
+      Value: 1.0
+    }
+  }
+}
+Pharmacodynamics {
+  Bronchodilation {
+    ScalarNegative1To1 {
+    }
+  }
+  DiastolicPressureModifier {
+    ScalarNegative1To1 {
+    }
+  }
+  EC50 {
+    ScalarMassPerVolume {
+      Value: 3.1E-5
+      Unit: "ug/mL"
+    }
+  }
+  EMaxShapeParameter {
+    Value: 1.0
+  }
+  HeartRateModifier {
+    ScalarNegative1To1 {
+      Value: 0.3
+    }
+  }
+  NeuromuscularBlock {
+    ScalarNegative1To1 {
+    }
+  }
+  PupillaryResponse {
+    ReactivityModifier {
+      ScalarNegative1To1 {
+        Value: -0.5
+      }
+    }
+    SizeModifier {
+      ScalarNegative1To1 {
+        Value: 0.5
+      }
+    }
+  }
+  RespirationRateModifier {
+    ScalarNegative1To1 {
+      Value: 0.2
+    }
+  }
+  Sedation {
+    ScalarNegative1To1 {
+    }
+  }
+  SystolicPressureModifier {
+    ScalarNegative1To1 {
+    }
+  }
+  TidalVolumeModifier {
+    ScalarNegative1To1 {
+    }
+  }
+  TubularPermeabilityModifier {
+    ScalarNegative1To1 {
+    }
+  }
+}
