@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fields:
+  - Time (s)
   - Lead3ElectricPotential (mV)
   - "HeartRate (1\u2215min)"
   - ArterialPressure (mmHg)

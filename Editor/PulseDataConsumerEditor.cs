@@ -7,8 +7,8 @@ using UnityEditor;
 [CustomEditor(typeof(PulseDataConsumer), true)]
 public class PulseDataConsumerEditor : Editor
 {
-    SerializedProperty sourceProp;
-    SerializedProperty dataFieldIndexProp;
+    SerializedProperty sourceProp;          // serialized data source
+    SerializedProperty dataFieldIndexProp;  // serialized data field index
 
     void OnEnable()
     {
@@ -18,11 +18,13 @@ public class PulseDataConsumerEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        // Ensure serialized properties are up to date with component
         serializedObject.Update();
 
-        // Select generator
+        // Draw UI to select data source
         EditorGUILayout.PropertyField(sourceProp, new GUIContent("Data source"));
 
+        // Display error message if data source is invalid then return
         var source = sourceProp.objectReferenceValue as PulseDataSource;
         if (source == null || source.data == null || source.data.fields == null)
         {
@@ -35,7 +37,7 @@ public class PulseDataConsumerEditor : Editor
             return;
         }
 
-        // Select datafield
+        // Draw UI to select datafield
         string[] fields = source.data.fields;
         dataFieldIndexProp.intValue = Mathf.Clamp(dataFieldIndexProp.intValue,
                                                   0,
@@ -44,9 +46,10 @@ public class PulseDataConsumerEditor : Editor
                                                             dataFieldIndexProp.intValue,
                                                             fields);
 
-        // Show default inspector property editor
+        // Show the default inspector property editor without the script field
         DrawPropertiesExcluding(serializedObject, "m_Script");
 
+        // Apply modifications back to the component
         serializedObject.ApplyModifiedProperties();
     }
 }
