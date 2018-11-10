@@ -3,8 +3,10 @@
 
 using UnityEngine;
 
+// Abstract class for any pulse data source that holds a reference
+// to the pulse data container
 public abstract class PulseDataSource: MonoBehaviour
 {
-    [SerializeField, HideInInspector]
+    [HideInInspector]
     public PulseData data;
 }

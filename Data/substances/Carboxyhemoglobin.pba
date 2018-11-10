@@ -1,0 +1,8 @@
+Name: "Carboxyhemoglobin"
+MolarMass {
+  ScalarMassPerAmount {
+    Value: 64570.04
+    Unit: "g/mol"
+  }
+}
+State: Molecular

@@ -1,0 +1,37 @@
+Name: "ForestFireParticulate"
+State: Solid
+Aerosolization {
+  BronchioleModifier {
+    ScalarNegative1To1 {
+    }
+  }
+  InflammationCoefficient {
+    Scalar0To1 {
+      Value: 0.5
+    }
+  }
+  ParticulateSizeDistribution {
+    HistogramFractionVsLength {
+      Histogram {
+        Dependent {
+          Value: 0.015
+          Value: 0.035
+          Value: 0.9
+          Value: 0.035
+          Value: 0.015
+          Value: 0.0
+        }
+        Independent {
+          Value: 1.0E-4
+          Value: 0.001
+          Value: 0.01
+          Value: 0.1
+          Value: 1.0
+          Value: 10.0
+          Value: 100.0
+        }
+        IndependentUnit: "um"
+      }
+    }
+  }
+}

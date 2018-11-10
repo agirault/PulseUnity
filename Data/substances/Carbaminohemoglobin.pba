@@ -1,0 +1,8 @@
+Name: "Carbaminohemoglobin"
+MolarMass {
+  ScalarMassPerAmount {
+    Value: 64634.04
+    Unit: "g/mol"
+  }
+}
+State: Molecular

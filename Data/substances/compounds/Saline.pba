@@ -1,0 +1,28 @@
+Name: "Saline"
+Component {
+  Name: "Sodium"
+  Concentration {
+    ScalarMassPerVolume {
+      Value: 0.323
+      Unit: "g/dL"
+    }
+  }
+}
+Component {
+  Name: "Oxygen"
+  Concentration {
+    ScalarMassPerVolume {
+      Value: 0.0329
+      Unit: "g/L"
+    }
+  }
+}
+Component {
+  Name: "CarbonDioxide"
+  Concentration {
+    ScalarMassPerVolume {
+      Value: 1.013
+      Unit: "g/L"
+    }
+  }
+}
